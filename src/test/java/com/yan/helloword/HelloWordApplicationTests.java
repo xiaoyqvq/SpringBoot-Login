@@ -1,20 +1,22 @@
 package com.yan.helloword;
 
 import com.yan.helloword.Pojo.User;
+import com.yan.helloword.mapper.UserLoginMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 @SpringBootTest
 class HelloWordApplicationTests {
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    UserLoginMapper userLoginMapper;
 
     @Test
     void contextLoads() {
-        Long num = jdbcTemplate.queryForObject("select count(*) from user where id=1", Long.class);
-        System.out.println(num);
+
     }
 
 }
