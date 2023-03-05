@@ -1,18 +1,45 @@
 package com.yan.helloword.Controller;
 
+import com.yan.helloword.Pojo.User;
+import com.yan.helloword.service.UserLoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-@RestController
+@Controller
 public class HelloController{
-    @RequestMapping("/login/check")
-    public String helloWord(HttpServletRequest request){
-            String username=request.getParameter("username");
-            String pwd=request.getParameter("pwd");
-            return "成功";
+    @Autowired
+    UserLoginService userLoginService;
+    @RequestMapping("/query")
+    public String helloWord(){
+        List<User> users = userLoginService.queryAllUser();
+        users.forEach(user->{
+            System.out.println(user);
+        });
+        return "success";
+    }
+
+    @PostMapping("/userlogin")
+    public String userLogin(@ModelAttribute User user){
+        String username=user.getUsername();
+        String password=user.getPassword();
+        User bean=userLoginService.findUserById(username);
+        if(password.equals(bean.getPassword())){
+            return "/login/success";
+        }
+        return null;
+
+
+    }
+
+    @GetMapping("/login")
+    public String intoLogin(){
+
+        return "/login/login";
+
     }
 
 }
